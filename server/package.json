@@ -1,8 +1,8 @@
 {
-  "name": "congress-server",
+  "name": "legislative-tracker-server",
   "version": "1.0.0",
   "private": true,
-  "description": "Node.js backend for the Congress bills web interface",
+  "description": "Node.js backend for the Legislative Tracker web interface",
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",

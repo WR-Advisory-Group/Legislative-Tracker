@@ -13,10 +13,10 @@ Web interface for searching Philippine Senate bills. Frontend is a React + Vite 
 ## Project Layout
 
 ```
-congress/
+legislative-tracker/
   src/                    # React SPA
-    pages/                # BillsSearchPage, UploadPage
-    components/           # layout, search, table, ui, upload
+    pages/                # BillsSearchPage
+    components/           # layout, search, table, ui
     api/client.ts         # Axios instance
   server/                 # Express API
     src/
