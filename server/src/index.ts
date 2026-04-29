@@ -29,5 +29,5 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = Number(process.env.PORT) || 4568;
 app.listen(PORT, () => {
-  console.log(`congress api listening on :${PORT}`);
+  console.log(`legislative server listening on :${PORT}`);
 });
