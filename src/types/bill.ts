@@ -21,6 +21,7 @@ export interface SearchFilters {
   q: string;
   congress: string;
   type: string;
+  monitor: string;
   author: string;
   primary_committee: string;
   legislative_status: string;
@@ -32,6 +33,7 @@ export const DEFAULT_FILTERS: SearchFilters = {
   q: '',
   congress: '',
   type: '',
+  monitor: '',
   author: '',
   primary_committee: '',
   legislative_status: '',

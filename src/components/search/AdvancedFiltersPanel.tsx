@@ -100,6 +100,16 @@ export default function AdvancedFiltersPanel({
             </select>
           </div>
 
+          {/* 4. Monitor */}
+          <div>
+            <label className={labelCls}>Monitor</label>
+            <select value={filters.monitor} onChange={e => set('monitor', e.target.value)} className={inputCls}>
+              <option value="">All Bills</option>
+              <option value="1">Monitored</option>
+              <option value="0">Not Monitored</option>
+            </select>
+          </div>
+
           {/* 4. Author / Sponsor */}
           <div>
             <label className={labelCls}>Author / Sponsor</label>

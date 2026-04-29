@@ -32,7 +32,7 @@ export default function InlineSearchBar({
         <select
           value={filters.congress}
           onChange={e => set('congress', e.target.value)}
-          className={`${inputCls} hidden sm:block sm:w-56`}
+          className={`${inputCls} hidden sm:block sm:w-44`}
         >
           <option value="">All Congresses</option>
           {filterOptions?.congresses.map(c => (
@@ -44,12 +44,23 @@ export default function InlineSearchBar({
         <select
           value={filters.type}
           onChange={e => set('type', e.target.value)}
-          className={`${inputCls} hidden sm:block sm:w-36`}
+          className={`${inputCls} hidden sm:block sm:w-32`}
         >
           <option value="">All Types</option>
           {filterOptions?.types.map(t => (
             <option key={t} value={t}>{t}</option>
           ))}
+        </select>
+
+        {/* Monitor select — hidden below lg */}
+        <select
+          value={filters.monitor}
+          onChange={e => set('monitor', e.target.value)}
+          className={`${inputCls} hidden lg:block lg:w-40`}
+        >
+          <option value="">All Bills</option>
+          <option value="1">Monitored</option>
+          <option value="0">Not Monitored</option>
         </select>
 
         {/* Search input */}

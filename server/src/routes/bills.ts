@@ -18,7 +18,7 @@ const SELECT_COLS =
   'b.id, b.type, b.no, b.title, b.longTitle, b.dateFiled, ' +
   'COALESCE(a.name, b.author) AS author, b.coAuthor, ' +
   'b.primaryCommittee, b.secondaryCommittee, b.legislativeStatus, ' +
-  'b.legislativeStatusDate, b.pdfUrl, b.congress, b.permalink';
+  'b.legislativeStatusDate, b.pdfUrl, b.congress, b.permalink, b.monitor';
 
 const FROM_CLAUSE = 'FROM bills b LEFT JOIN authors a ON b.author = a.code';
 
@@ -29,6 +29,7 @@ const searchQuerySchema = z.object({
   author: z.string().optional(),
   primary_committee: z.string().optional(),
   legislative_status: z.string().optional(),
+  monitor: z.enum(['0', '1']).optional(),
   sort_by: z.string().default('dateFiled'),
   sort_order: z.string().default('DESC'),
   page: z.coerce.number().int().min(1).default(1),
@@ -44,6 +45,7 @@ router.get('/search', async (req: Request, res: Response) => {
     q,
     congress,
     type,
+    monitor,
     author,
     primary_committee,
     legislative_status,
@@ -68,6 +70,10 @@ router.get('/search', async (req: Request, res: Response) => {
   if (type) {
     conditions.push('type = ?');
     params.push(type);
+  }
+  if (monitor !== undefined) {
+    conditions.push('b.monitor = ?');
+    params.push(Number(monitor));
   }
   if (author) {
     conditions.push('(b.author LIKE ? OR a.name LIKE ? OR b.sponsor_name LIKE ?)');

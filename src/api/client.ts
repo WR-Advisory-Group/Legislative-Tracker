@@ -15,6 +15,7 @@ export async function searchBills(
   if (filters.q) params.q = filters.q;
   if (filters.congress) params.congress = filters.congress;
   if (filters.type) params.type = filters.type;
+  if (filters.monitor) params.monitor = filters.monitor;
   if (filters.author) params.author = filters.author;
   if (filters.primary_committee) params.primary_committee = filters.primary_committee;
   if (filters.legislative_status) params.legislative_status = filters.legislative_status;

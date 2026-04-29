@@ -1,5 +1,5 @@
 services:
-  congress:
+  legislative-tracker:
     build:
       context: .
       dockerfile: Dockerfile

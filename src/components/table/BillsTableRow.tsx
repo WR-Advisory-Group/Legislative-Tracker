@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Bill } from '../../types/bill';
 import { setBillMonitor } from '../../api/client';
 
@@ -20,6 +20,10 @@ export default function BillsTableRow({ bill, isEven }: Props) {
   const rowBg = isEven ? 'bg-white' : 'bg-mb-blue-5';
   const [monitored, setMonitored] = useState(bill.monitor === 1);
   const [pending, setPending] = useState(false);
+
+  useEffect(() => {
+    setMonitored(bill.monitor === 1);
+  }, [bill.id, bill.monitor]);
 
   const handleToggle = async () => {
     if (pending) return;
