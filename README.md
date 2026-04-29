@@ -1,4 +1,4 @@
-# Congress
+# Legislative Tracker
 
 > **Important:** This project is a **read-only viewer and search interface** for the `philippine_congress_bills` database. It has no capability to add or update bill data. All data ingestion is handled externally by the **Watcher** project combined with an **n8n workflow** — changes to the underlying data must go through that pipeline.
 
