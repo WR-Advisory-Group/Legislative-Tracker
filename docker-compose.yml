@@ -1,0 +1,11 @@
+services:
+  congress:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rjongco/legislative-tracker:latest
+    ports:
+      - "5173:4568"
+    volumes:
+      - ./.env:/app/.env:ro
+    restart: unless-stopped

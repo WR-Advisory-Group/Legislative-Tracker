@@ -1,0 +1,16 @@
+node_modules
+dist
+server/node_modules
+server/dist
+.env
+.env.example
+.git
+.gitignore
+.vscode
+.idea
+*.log
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md
+.playwright-mcp
