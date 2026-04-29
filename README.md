@@ -1,6 +1,8 @@
 # Congress
 
-Web interface for searching and uploading Philippine Senate bills. Frontend is a React + Vite SPA styled after [senate.gov.ph](https://senate.gov.ph/legislative-documents/bills); backend is an Express API backed by MySQL.
+> **Important:** This project is a **read-only viewer and search interface** for the `philippine_congress_bills` database. It has no capability to add or update bill data. All data ingestion is handled externally by the **Watcher** project combined with an **n8n workflow** — changes to the underlying data must go through that pipeline.
+
+Web interface for searching Philippine Senate bills. Frontend is a React + Vite SPA styled after [senate.gov.ph](https://senate.gov.ph/legislative-documents/bills); backend is an Express API backed by MySQL.
 
 ## Stack
 
