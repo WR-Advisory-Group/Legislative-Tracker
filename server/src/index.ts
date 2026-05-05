@@ -10,6 +10,7 @@ import express from 'express';
 import cors from 'cors';
 import billsRouter from './routes/bills';
 import keywordsRouter from './routes/keywords';
+import committeesRouter from './routes/committees';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.json({ limit: '10mb' }));
 
 app.use('/api/bills', billsRouter);
 app.use('/api/keywords', keywordsRouter);
+app.use('/api/committees', committeesRouter);
 
 if (process.env.NODE_ENV === 'production') {
   const distPath = path.resolve(__dirname, '../../dist');

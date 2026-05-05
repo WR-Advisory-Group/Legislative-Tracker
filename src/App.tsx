@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import NavBar from './components/layout/NavBar';
 import Footer from './components/layout/Footer';
 import BillsSearchPage from './pages/BillsSearchPage';
+import CommitteesPage from './pages/CommitteesPage';
 import KeywordsPage from './pages/KeywordsPage';
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<BillsSearchPage />} />
+        <Route path="/committees" element={<CommitteesPage />} />
         <Route path="/keywords" element={<KeywordsPage />} />
       </Routes>
       <Footer />

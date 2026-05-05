@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { BillsSearchResponse, FilterOptions, SearchFilters } from '../types/bill';
+import type { CommitteeFilters, CommitteesSearchResponse } from '../types/committee';
 import type { KeywordRow, KeywordsResponse, ReplaceKeywordsResponse } from '../types/keyword';
 
 const api = axios.create({
@@ -43,4 +44,16 @@ export async function replaceKeywords(rows: KeywordRow[]): Promise<ReplaceKeywor
 
 export async function setBillMonitor(id: number, monitor: 0 | 1): Promise<void> {
   await api.patch(`/bills/${id}/monitor`, { monitor });
+}
+
+export async function searchCommittees(filters: CommitteeFilters): Promise<CommitteesSearchResponse> {
+  const params: Record<string, string> = {};
+  if (filters.q) params.q = filters.q;
+  if (filters.monitor) params.monitor = filters.monitor;
+  const { data } = await api.get<CommitteesSearchResponse>('/committees/search', { params });
+  return data;
+}
+
+export async function setCommitteeMonitor(code: string, monitor: 0 | 1): Promise<void> {
+  await api.patch(`/committees/${encodeURIComponent(code)}/monitor`, { monitor });
 }

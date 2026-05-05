@@ -26,6 +26,16 @@ export default function NavBar() {
             Bills
           </NavLink>
           <NavLink
+            to="/committees"
+            className={({ isActive }) =>
+              `text-sm font-semibold transition-colors ${
+                isActive ? 'text-mb-brand border-b-2 border-mb-brand pb-0.5' : 'text-mb-text-dark hover:text-mb-brand'
+              }`
+            }
+          >
+            Committees
+          </NavLink>
+          <NavLink
             to="/keywords"
             className={({ isActive }) =>
               `text-sm font-semibold transition-colors ${
@@ -72,6 +82,15 @@ export default function NavBar() {
             }
           >
             Bills
+          </NavLink>
+          <NavLink
+            to="/committees"
+            onClick={() => setMobileOpen(false)}
+            className={({ isActive }) =>
+              `text-sm font-semibold py-2 ${isActive ? 'text-mb-brand' : 'text-mb-text-dark'}`
+            }
+          >
+            Committees
           </NavLink>
           <NavLink
             to="/keywords"

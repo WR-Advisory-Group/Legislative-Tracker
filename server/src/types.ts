@@ -36,3 +36,13 @@ export interface FilterOptions {
   legislative_statuses: string[];
   authors: string[];
 }
+
+export interface Committee {
+  code: string;
+  name: string;
+  monitor: number;
+}
+
+export interface CommitteesSearchResponse {
+  data: Committee[];
+}
