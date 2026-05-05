@@ -31,7 +31,7 @@ export interface SearchFilters {
 
 export const DEFAULT_FILTERS: SearchFilters = {
   q: '',
-  congress: '',
+  congress: '20th Congress',
   type: '',
   monitor: '',
   author: '',
