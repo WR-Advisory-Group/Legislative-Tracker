@@ -110,8 +110,12 @@ export default function BillsSearchPage() {
           filterOptions={filterOptions}
         />
 
-        <div className="mt-6 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <BillsTable bills={bills} loading={loading} error={error} />
+        {!loading && !error && pagination.total > 0 && (
+          <Pagination pagination={pagination} onPageChange={handlePageChange} />
+        )}
+
+        <div className="mt-4 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <BillsTable bills={bills} loading={loading} error={error} committeeNames={filterOptions?.committee_names ?? []} />
         </div>
 
         {!loading && !error && pagination.total > 0 && (
