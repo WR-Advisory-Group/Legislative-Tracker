@@ -147,12 +147,18 @@ router.get('/filter-options', async (_req: Request, res: Response) => {
     );
     const authors = authorRows.map((r) => r.name);
 
+    const committeeNameRows = await query<{ name: string }>(
+      "SELECT name FROM committees WHERE name IS NOT NULL AND name != '' ORDER BY LENGTH(name) DESC",
+    );
+    const committee_names = committeeNameRows.map((r) => r.name);
+
     const body: FilterOptions = {
       congresses,
       types,
       primary_committees,
       legislative_statuses,
       authors,
+      committee_names,
     };
     return res.json(body);
   } catch (e: any) {

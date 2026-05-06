@@ -5,6 +5,29 @@ import { setBillMonitor } from '../../api/client';
 interface Props {
   bill: Bill;
   isEven: boolean;
+  committeeNames: string[];
+}
+
+function splitByKnownNames(value: string, names: string[]): string[] {
+  const result: string[] = [];
+  let remaining = value.trim();
+  while (remaining.length > 0) {
+    const match = names.find(n => remaining.startsWith(n));
+    if (match) {
+      result.push(match);
+      remaining = remaining.slice(match.length).replace(/^[,\s]+/, '');
+    } else {
+      const commaIdx = remaining.indexOf(',');
+      if (commaIdx === -1) {
+        result.push(remaining.trim());
+        remaining = '';
+      } else {
+        result.push(remaining.slice(0, commaIdx).trim());
+        remaining = remaining.slice(commaIdx + 1).trim();
+      }
+    }
+  }
+  return result.filter(Boolean);
 }
 
 function PdfIcon() {
@@ -16,7 +39,7 @@ function PdfIcon() {
   );
 }
 
-export default function BillsTableRow({ bill, isEven }: Props) {
+export default function BillsTableRow({ bill, isEven, committeeNames }: Props) {
   const rowBg = isEven ? 'bg-white' : 'bg-mb-blue-5';
   const [monitored, setMonitored] = useState(bill.monitor === 1);
   const [pending, setPending] = useState(false);
@@ -42,59 +65,78 @@ export default function BillsTableRow({ bill, isEven }: Props) {
 
   return (
     <tr className={`${rowBg} hover:bg-mb-blue-10 transition-colors duration-150 cursor-pointer`}>
-      {/* TYPE */}
-      <td className="px-4 py-4 text-mb-text-dark text-sm font-semibold align-middle whitespace-nowrap">
-        {bill.type ?? '—'}
-      </td>
-
       {/* BILL NO. */}
-      <td className="px-4 py-4 text-mb-brand text-sm font-semibold align-middle whitespace-nowrap">
+      <td className="px-4 py-4 text-mb-brand text-xs font-semibold align-middle whitespace-nowrap">
         {bill.no ?? '—'}
       </td>
 
       {/* TITLE / SUBJECT */}
-      <td className="px-4 py-4 align-middle">
+      <td className="px-4 py-4 align-middle w-[480px]">
         <div>
           {bill.permalink ? (
             <a
               href={bill.permalink}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-bold uppercase text-mb-text-dark hover:underline text-sm leading-snug"
+              className="font-bold uppercase text-mb-text-dark hover:underline text-xs leading-snug"
             >
               {bill.title ?? '(No Title)'}
             </a>
           ) : (
-            <span className="font-bold uppercase text-mb-text-dark text-sm leading-snug">
+            <span className="font-bold uppercase text-mb-text-dark text-xs leading-snug">
               {bill.title ?? '(No Title)'}
             </span>
           )}
           {bill.longTitle && (
-            <p className="text-mb-text-medium text-sm mt-1 line-clamp-2">{bill.longTitle}</p>
+            <p className="text-mb-text-medium text-xs mt-1 line-clamp-2">{bill.longTitle}</p>
           )}
-          <div className="flex flex-wrap gap-x-4 mt-1">
-            {bill.primaryCommittee && (
-              <span className="text-mb-text-light text-xs">Primary Committee: {bill.primaryCommittee}</span>
-            )}
-            {bill.secondaryCommittee && (
-              <span className="text-mb-text-light text-xs">Secondary Committee: {bill.secondaryCommittee}</span>
-            )}
-          </div>
+          {bill.legislativeStatus && (
+            <div className="flex flex-wrap gap-1 mt-2">
+              {bill.legislativeStatus.split(',').map(s => s.trim()).filter(Boolean).map(s => (
+                <span key={s} className="inline-block bg-mb-blue-10 text-mb-brand text-xs font-medium px-2.5 py-0.5 rounded-full">
+                  {s}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </td>
+
+      {/* STATUS DATE */}
+      <td className="px-4 py-4 text-mb-text-medium text-xs align-middle whitespace-nowrap">
+        {bill.legislativeStatusDate ?? '—'}
+      </td>
+
+      {/* COMMITTEE */}
+      <td className="px-2 py-4 align-middle w-[220px]">
+        <div className="flex flex-wrap gap-1">
+          {(() => {
+            const pills: string[] = [];
+            if (bill.primaryCommittee) pills.push(bill.primaryCommittee.trim());
+            if (bill.secondaryCommittee) pills.push(...splitByKnownNames(bill.secondaryCommittee, committeeNames));
+            return pills.length > 0
+              ? pills.map(c => (
+                  <span key={c} className="inline-block bg-gray-100 text-gray-600 text-xs font-medium px-2 py-0.5 rounded break-words max-w-full">
+                    {c}
+                  </span>
+                ))
+              : <span className="text-xs text-mb-text-medium">—</span>;
+          })()}
         </div>
       </td>
 
       {/* DATE FILED */}
-      <td className="px-4 py-4 text-mb-text-medium text-sm align-middle whitespace-nowrap">
+      <td className="px-4 py-4 text-mb-text-medium text-xs align-middle whitespace-nowrap">
         {bill.dateFiled ?? '—'}
       </td>
 
       {/* AUTHOR */}
-      <td className="px-4 py-4 text-mb-text-medium text-sm align-middle">
+      <td className="px-2 py-4 text-mb-text-medium text-xs align-middle w-[120px]">
         <span className="line-clamp-2">{bill.author ?? '—'}</span>
       </td>
 
       {/* ACTION */}
-      <td className="px-4 py-4 align-middle min-w-[180px]">
+      <td className="px-4 py-4 align-middle w-[120px]">
         <div className="flex flex-col gap-2 items-start">
           <div className="flex items-center gap-2">
             {bill.permalink && (

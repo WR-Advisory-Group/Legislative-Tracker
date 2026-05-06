@@ -59,4 +59,5 @@ export interface FilterOptions {
   primary_committees: string[];
   legislative_statuses: string[];
   authors: string[];
+  committee_names: string[];
 }
